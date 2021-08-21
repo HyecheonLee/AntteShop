@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout::layout(~{::title},~{::section})}" lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home - Antte Admin</title>
+</head>
+<body>
+<section>
+    <div>
+        <h2>사용자 관리</h2>
+        <a th:href="@{/admin/users/new}">새 사용자 생성</a>
+        <div th:if="${message != null}" class="alert alert-success text-center" th:text="${message}"></div>
+    </div>
+    <div>
+        <table class="table table-bordered table-striped table-hover table-responsive-xl">
+            <thead class="thead-dark">
+            <tr>
+                <th>사용자 ID</th>
+                <th>사진</th>
+                <th>이메일</th>
+                <th>이름</th>
+                <th>성</th>
+                <th>역할</th>
+                <th>활성화됨</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}" th:object="${user}">
+                <td th:text="*{id}"></td>
+                <td>
+                    <i th:if="*{photos == null}" class="fas fa-portrait fa-3x icon-silver"></i>
+                    <img th:unless="*{photos == null}" th:src="@{*{photos}}" style="width: 100px"/>
+                </td>
+                <td th:text="*{email}"></td>
+                <td th:text="*{lastName}"></td>
+                <td th:text="*{firstName}"></td>
+                <td th:text="*{displayRole()}"></td>
+                <td>
+                    <a th:classappend="${user.enabled ? 'icon-green fa-check-circle' : 'icon-gray fa-circle'}"
+                       th:title="${user.enabled}? '사용자 비활성화' : '사용자 활성화'"
+                       class="fas fa-2x "
+                       th:href="@{/admin/users/{id}/enabled(id=*{id},status=*{!enabled})}"></a>
+                </td>
+                <td><a class="fas fa-edit fa-2x icon-green" th:href="@{/admin/users/{id}/update(id=*{id})}"></a>
+                    &nbsp;
+                    <a class="fas fa-trash fa-2x icon-dark link-delete"
+                       th:href="@{/admin/users/{id}/delete(id=*{id})}"
+                       th:userId="*{id}" title="이 사용자 삭제"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <nav th:replace="/layout/fragment/navigation::navigation(${pageInfo})" aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".link-delete").on("click", function (e) {
+                e.preventDefault();
+                let link = $(this);
+                const userId = link.attr("userId");
+                confirmModal("경고", `이 사용자 ID ${userId}을 삭제하시겠습니까?`, e => {
+                    window.location.href = link.attr("href");
+                });
+            });
+        })
+    </script>
+</section>
+</body>
+</html>

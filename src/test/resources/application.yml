@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  datasource:
+    driver-class-name: org.h2.Driver
+decorator:
+  datasource:
+    p6spy:
+      multiline: true
+      enable-logging: true
+      logging: slf4j
+      tracing:
+        include-parameter-values: true
+logging:
+  level:
+    p6spy: trace

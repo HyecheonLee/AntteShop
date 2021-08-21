@@ -1,0 +1,9 @@
+1628909411777|0|statement|connection 10|url jdbc:h2:mem:f8ec217a-6446-45bf-a584-087581ab9991|drop table if exists roles CASCADE |drop table if exists roles CASCADE 
+1628909411778|0|statement|connection 10|url jdbc:h2:mem:f8ec217a-6446-45bf-a584-087581ab9991|drop table if exists users CASCADE |drop table if exists users CASCADE 
+1628909411778|0|statement|connection 10|url jdbc:h2:mem:f8ec217a-6446-45bf-a584-087581ab9991|drop table if exists users_roles CASCADE |drop table if exists users_roles CASCADE 
+1629523469674|0|statement|connection 10|url jdbc:h2:mem:f192b7cf-9d42-4899-ad4f-f9c12a8f2438|drop table if exists roles CASCADE |drop table if exists roles CASCADE 
+1629523469675|0|statement|connection 10|url jdbc:h2:mem:f192b7cf-9d42-4899-ad4f-f9c12a8f2438|drop table if exists users CASCADE |drop table if exists users CASCADE 
+1629523469675|0|statement|connection 10|url jdbc:h2:mem:f192b7cf-9d42-4899-ad4f-f9c12a8f2438|drop table if exists users_roles CASCADE |drop table if exists users_roles CASCADE 
+1629523649711|0|statement|connection 13|url jdbc:h2:mem:2ce55dbc-3278-45ae-914d-5dd4b234a2a3|drop table if exists roles CASCADE |drop table if exists roles CASCADE 
+1629523649713|0|statement|connection 13|url jdbc:h2:mem:2ce55dbc-3278-45ae-914d-5dd4b234a2a3|drop table if exists users CASCADE |drop table if exists users CASCADE 
+1629523649713|0|statement|connection 13|url jdbc:h2:mem:2ce55dbc-3278-45ae-914d-5dd4b234a2a3|drop table if exists users_roles CASCADE |drop table if exists users_roles CASCADE 
