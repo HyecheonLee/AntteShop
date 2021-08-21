@@ -1,10 +1,10 @@
 package com.hyecheon.antteshop.mapper;
 
-import com.hyecheon.antteshop.dto.RoleDto;
-import com.hyecheon.antteshop.dto.UserCreateDto;
-import com.hyecheon.antteshop.dto.UserDto;
 import com.hyecheon.antteshop.entity.User;
 import com.hyecheon.antteshop.utils.ContextUtils;
+import com.hyecheon.antteshop.web.dto.RoleDto;
+import com.hyecheon.antteshop.web.dto.UserCreateDto;
+import com.hyecheon.antteshop.web.dto.UserDto;
 import com.hyecheon.antteshop.web.dto.UserUpdateDto;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
  */
 
 @Mapper
-
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 

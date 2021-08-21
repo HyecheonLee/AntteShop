@@ -1,7 +1,7 @@
 package com.hyecheon.antteshop.mapper;
 
-import com.hyecheon.antteshop.dto.RoleDto;
 import com.hyecheon.antteshop.entity.Role;
+import com.hyecheon.antteshop.web.dto.RoleDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

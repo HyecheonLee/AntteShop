@@ -1,21 +1,17 @@
 package com.hyecheon.antteshop.web.view.admin
 
 import com.hyecheon.antteshop.TestUsers
-import com.hyecheon.antteshop.dto.UserDto
 import com.hyecheon.antteshop.services.UserService
 import com.hyecheon.antteshop.utils.toDto
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.anyString
-import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.core.io.ClassPathResource
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.http.MediaType
@@ -24,10 +20,8 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.validation.BindingResult
-import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.io.path.absolute
 import kotlin.io.path.deleteIfExists
 import kotlin.io.path.exists
 

@@ -1,12 +1,11 @@
 package com.hyecheon.antteshop.services.impl
 
-import com.hyecheon.antteshop.dto.UserDto
-import com.hyecheon.antteshop.entity.User
 import com.hyecheon.antteshop.mapper.UserMapper
 import com.hyecheon.antteshop.repositories.UserRepository
 import com.hyecheon.antteshop.services.UserService
 import com.hyecheon.antteshop.utils.toDto
 import com.hyecheon.antteshop.utils.update
+import com.hyecheon.antteshop.web.dto.UserDto
 import org.springframework.data.domain.Pageable
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service

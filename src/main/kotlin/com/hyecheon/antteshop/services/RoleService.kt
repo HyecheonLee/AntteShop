@@ -1,6 +1,7 @@
 package com.hyecheon.antteshop.services
 
-import com.hyecheon.antteshop.dto.RoleDto
+import com.hyecheon.antteshop.web.dto.RoleDto
+
 
 /**
  * User: hyecheon lee

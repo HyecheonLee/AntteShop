@@ -1,7 +1,7 @@
 package com.hyecheon.antteshop.services
 
-import com.hyecheon.antteshop.dto.UserDto
-import com.hyecheon.antteshop.entity.User
+
+import com.hyecheon.antteshop.web.dto.UserDto
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 

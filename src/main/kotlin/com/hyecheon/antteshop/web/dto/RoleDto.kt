@@ -1,9 +1,4 @@
-package com.hyecheon.antteshop.dto
-
-import lombok.AllArgsConstructor
-import lombok.Builder
-import lombok.Data
-import lombok.NoArgsConstructor
+package com.hyecheon.antteshop.web.dto
 
 /**
  * User: hyecheon lee
