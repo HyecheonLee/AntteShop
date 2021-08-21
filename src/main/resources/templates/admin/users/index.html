@@ -29,7 +29,7 @@
                 <td th:text="*{id}"></td>
                 <td>
                     <i th:if="*{photos == null}" class="fas fa-portrait fa-3x icon-silver"></i>
-                    <img th:unless="*{photos == null}" th:src="@{*{photos}}" style="width: 100px"/>
+                    <img th:unless="*{photos == null}" th:src="@{'/'+*{photos.path}}" style="width: 100px"/>
                 </td>
                 <td th:text="*{email}"></td>
                 <td th:text="*{lastName}"></td>

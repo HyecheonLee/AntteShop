@@ -36,7 +36,6 @@ public interface UserMapper {
     UserDto toDto(UserCreateDto userCreateDto);
 
 
-    @Mapping(target = "photos", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "email", ignore = true)
     @Mapping(target = "roles", qualifiedByName = "toRoles")

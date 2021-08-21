@@ -35,8 +35,8 @@ public class User extends BaseEntity {
     @Column(length = 45, nullable = false)
     private String lastName;
 
-    @Column(length = 64)
-    private String photos;
+    @OneToOne(cascade = CascadeType.ALL)
+    public UserFileInfo photos;
 
     private boolean enabled;
 
@@ -53,5 +53,4 @@ public class User extends BaseEntity {
             if (role != null) this.roles.add(role);
         }
     }
-
 }

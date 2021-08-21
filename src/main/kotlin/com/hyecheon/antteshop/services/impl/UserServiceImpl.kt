@@ -29,10 +29,11 @@ class UserServiceImpl(
 
     override fun save(id: Long, userDto: UserDto): UserDto {
         val findUser = userRepository.findById(id).orElseThrow { UsernameNotFoundException("id가 존재 하지 않습니다.") }
+        val oldPhoto = findUser.photos
+        oldPhoto.setDeleted(true)
         findUser.update(userDto)
         try {
-            val toDto = findUser.toDto()
-            return toDto
+            return findUser.toDto()
         } catch (e: Exception) {
             throw RuntimeException("")
         }

@@ -3,6 +3,7 @@ package com.hyecheon.antteshop.web.view.admin
 import com.hyecheon.antteshop.TestUsers
 import com.hyecheon.antteshop.services.UserService
 import com.hyecheon.antteshop.utils.toDto
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -20,8 +21,10 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.validation.BindingResult
+import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.io.path.absolute
 import kotlin.io.path.deleteIfExists
 import kotlin.io.path.exists
 
@@ -176,8 +179,13 @@ internal class UserControllerTest {
     @Test
     internal fun test7() {
         val uploadDir = Path.of("", "user-photos/1")
-        val uploadedFile = uploadDir.resolve("default-user.png")
-        uploadedFile.deleteIfExists()
+        val absolute = uploadDir.absolute()
+        val saveFile = File(absolute.toUri())
+        saveFile.listFiles().forEach { file -> file.delete() }
+        assertThat(saveFile.listFiles().size).isEqualTo(0)
+
+//        val uploadedFile = uploadDir.resolve("default-user.png")
+//        uploadedFile.deleteIfExists()
 
 //        whenever(userService.save(UserDto())).thenReturn(UserDto())
         val workingDir = Path.of("", "src/test/resources/static/images")
@@ -199,6 +207,6 @@ internal class UserControllerTest {
         )
             .andExpect(status().is3xxRedirection)
             .andReturn()
-        assertThat(uploadedFile.exists()).isTrue
+        assertThat(saveFile.listFiles().size).isEqualTo(1)
     }
 }

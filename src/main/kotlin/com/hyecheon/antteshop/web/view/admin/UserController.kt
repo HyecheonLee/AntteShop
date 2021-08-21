@@ -68,14 +68,11 @@ class UserController(
         model: Model,
     ): String {
         if (bindingResult.hasErrors()) {
-            val userDto = userService.findById(id)
-            model.addAttribute("user", userDto)
-            return "admin/users/update"
+            return "redirect:/admin/users/${id}/update"
         } else {
-            val userDto = UserMapper.INSTANCE.toDto(userUpdateDto)
-            val uploadDir = "user-photos/1"
+            val uploadDir = "user-photos/${id}"
             userUpdateDto.saveImage(uploadDir)
-
+            val userDto = UserMapper.INSTANCE.toDto(userUpdateDto)
             userService.save(id, userDto)
             return "redirect:/admin/users"
         }

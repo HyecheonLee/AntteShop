@@ -22,13 +22,18 @@ import java.util.stream.Collectors
 data class UserDto(
     var id: Long? = null,
     var email: String? = null,
-    var password: String? = null,
     var firstName: String? = null,
     var lastName: String? = null,
-    var photos: String? = null,
+    var photos: FileInfoDto? = null,
     var enabled: Boolean? = null,
     var roles: MutableSet<RoleDto>? = null,
 ) {
+    val password: String? = null
+        get() {
+            return if (field.isNullOrEmpty()) null
+            else field
+        }
+
     fun addRole(vararg roles: RoleDto?) {
         for (role in roles) {
             addRole(role)

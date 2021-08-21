@@ -35,6 +35,9 @@ public abstract class BaseEntity {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @Column(name = "isDeleted", nullable = false)
-    private boolean deleted;
+    public boolean deleted;
 
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 }

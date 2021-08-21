@@ -13,6 +13,8 @@ decorator:
       logging: slf4j
       tracing:
         include-parameter-values: true
+      log-file: logs/sql.log
 logging:
   level:
     p6spy: trace
+
