@@ -11,10 +11,8 @@ spring:
       ddl-auto: update
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-    show-sql: true
     properties:
       hibernate:
-        #        format_sql: true
         dialect: org.hibernate.dialect.MariaDB103Dialect
   devtools:
     livereload:
@@ -23,10 +21,10 @@ decorator:
   datasource:
     p6spy:
       multiline: true
-      log-file: logs/sql.log
       enable-logging: true
       logging: slf4j
-      tracing.include-parameter-values: true
+      tracing:
+        include-parameter-values: true
 logging:
   file:
     path: logs
