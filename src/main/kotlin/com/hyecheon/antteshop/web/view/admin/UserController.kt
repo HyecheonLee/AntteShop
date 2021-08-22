@@ -34,7 +34,7 @@ class UserController(
 
     @GetMapping("")
     fun users(
-        @PageableDefault(page = 0, size = 20, direction = Sort.Direction.DESC, sort = ["id"]) pageable: Pageable,
+        @PageableDefault(page = 0, size = 5, direction = Sort.Direction.DESC, sort = ["id"]) pageable: Pageable,
         model: Model,
     ): String {
         val pageUser = userService.users(pageable)

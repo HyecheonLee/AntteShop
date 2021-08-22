@@ -13,6 +13,8 @@ data class PageInfo(
     val current: Int,
     val totalPages: Int,
     val pageList: List<Int>,
+    val prePageNum: Int = 0,
+    val nexPageNum: Int = 0,
 ) {
 
     companion object {
@@ -30,8 +32,16 @@ data class PageInfo(
                         else -> startIndex..endIndex
                     }
                 }
-            }
-            return PageInfo(page.hasNext(), page.hasPrevious(), page.number, page.totalPages, pageList.toList())
+            }.toList()
+            val prePageNum = (pageList.first() - showPage - 1).coerceAtLeast(0)
+            val nexPageNum = (pageList.last() + showPage + 1).coerceAtMost(page.totalPages - 1)
+            return PageInfo(page.hasNext(),
+                page.hasPrevious(),
+                page.number,
+                page.totalPages,
+                pageList,
+                prePageNum,
+                nexPageNum)
         }
     }
 }
