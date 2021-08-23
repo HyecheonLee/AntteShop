@@ -14,11 +14,19 @@
         <table class="table table-bordered table-striped table-hover table-responsive-xl">
             <thead class="thead-dark">
             <tr>
-                <th>사용자 ID</th>
+                <th>
+                    <div th:replace="/layout/fragment/sortBtn::sortBtn('id','사용자 ID')"></div>
+                </th>
                 <th>사진</th>
-                <th>이메일</th>
-                <th>이름</th>
-                <th>성</th>
+                <th>
+                    <div th:replace="/layout/fragment/sortBtn::sortBtn('email','이메일')"></div>
+                </th>
+                <th>
+                    <div th:replace="/layout/fragment/sortBtn::sortBtn('lastName','이름')"></div>
+                </th>
+                <th>
+                    <div th:replace="/layout/fragment/sortBtn::sortBtn('firstName','성')"></div>
+                </th>
                 <th>역할</th>
                 <th>활성화됨</th>
                 <th></th>
