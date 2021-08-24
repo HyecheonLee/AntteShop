@@ -6,6 +6,7 @@ import com.hyecheon.antteshop.services.UserService
 import com.hyecheon.antteshop.utils.toDto
 import com.hyecheon.antteshop.utils.update
 import com.hyecheon.antteshop.web.dto.UserDto
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
@@ -21,6 +22,11 @@ class UserServiceImpl(
     override fun users(pageable: Pageable) = run {
         val pageUser = userRepository.findAll(pageable)
         pageUser.map(mapper::toDto)
+    }
+
+    override fun users(pageable: Pageable, keyword: String?): Page<UserDto> {
+        val pageUser = keyword?.let { userRepository.findAll(keyword, pageable) } ?: userRepository.findAll(pageable)
+        return pageUser.map(mapper::toDto)
     }
 
     override fun save(userDto: UserDto): UserDto {

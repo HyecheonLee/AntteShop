@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<nav th:fragment="navigation(pageInfo)" th:object="${pageInfo}" aria-label="Page navigation example">
+<nav th:fragment="navigation(pageInfo)" th:if="${pageInfo != null}" th:object="${pageInfo}" aria-label="Page navigation example">
     <!--/*@thymesVar id="pageInfo" type="com.hyecheon.antteshop.domains.PageInfo"*/-->
     <ul class="pagination justify-content-center">
         <li class="page-item">
             <a class="page-link" href="#" aria-label="First"
-               th:href="@{${#httpServletRequest.requestURI}(
-               page=0,
-               sort=${#httpServletRequest.getParameter('sort')},
-               size=${#httpServletRequest.getParameter('size')}
-               )}"
+               th:href="@{|${#httpServletRequest.requestURI}${@thymeleafUtils.pageParameter(0)}|}"
                th:classappend="${pageInfo.current == 0 ?'disable' : _ }">
                 <span aria-hidden="true">&lang;&lang;</span>
                 <span class="sr-only">First</span>
@@ -17,11 +13,7 @@
         </li>
         <li class="page-item">
             <a class="page-link" href="#" aria-label="Previous"
-               th:href="@{${#httpServletRequest.requestURI}(
-               page=${pageInfo.prePageNum},
-               sort=${#httpServletRequest.getParameter('sort')},
-               size=${#httpServletRequest.getParameter('size')}
-               )}"
+               th:href="@{|${#httpServletRequest.requestURI}${@thymeleafUtils.pageParameter(pageInfo.prePageNum)}|}"
                th:classappend="${pageInfo.isPrev() ? _ : 'disable' }">
                 <span aria-hidden="true">&lang;</span>
                 <span class="sr-only">Previous</span>
@@ -31,19 +23,11 @@
             th:classappend="${pageInfo.current == page ?'active disable' : _ }">
             <a class="page-link" href="#"
                th:text="${page + 1}"
-               th:href="@{${#httpServletRequest.requestURI}(
-               page=${page},
-               sort=${#httpServletRequest.getParameter('sort')},
-               size=${#httpServletRequest.getParameter('size')}
-               )}">1</a>
+               th:href="@{|${#httpServletRequest.requestURI}${@thymeleafUtils.pageParameter(page)}|}">1</a>
         </li>
         <li class="page-item">
             <a class="page-link" href="#" aria-label="Previous"
-               th:href="@{${#httpServletRequest.requestURI}(
-               page=${pageInfo.nexPageNum},
-               sort=${#httpServletRequest.getParameter('sort')},
-               size=${#httpServletRequest.getParameter('size')}
-               )}"
+               th:href="@{|${#httpServletRequest.requestURI}${@thymeleafUtils.pageParameter(pageInfo.nexPageNum)}|}"
                th:classappend="${pageInfo.isNext() ? _ : 'disable' }">
                 <span aria-hidden="true">&rang;</span>
                 <span class="sr-only">Next</span>
@@ -51,11 +35,7 @@
         </li>
         <li class="page-item">
             <a class="page-link" href="#" aria-label="Last"
-               th:href="@{${#httpServletRequest.requestURI}(
-               page=${pageInfo.getTotalPages() - 1},
-               sort=${#httpServletRequest.getParameter('sort')},
-               size=${#httpServletRequest.getParameter('size')}
-               )}"
+               th:href="@{|${#httpServletRequest.requestURI}${@thymeleafUtils.pageParameter(pageInfo.getTotalPages() - 1)}|}"
                th:classappend="${pageInfo.current == pageInfo.getTotalPages() - 1 ?'disable' : _ }">
                 <span aria-hidden="true">&rang;&rang;</span>
                 <span class="sr-only">Last</span>

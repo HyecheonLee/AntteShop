@@ -1,6 +1,7 @@
 package com.hyecheon.antteshop.utils
 
 import org.springframework.stereotype.Component
+import org.springframework.web.util.UriUtils
 import javax.servlet.http.HttpServletRequest
 
 /**
@@ -44,5 +45,45 @@ class ThymeleafUtils(
         } else {
             "${sortParam},desc"
         }
+    }
+
+
+    fun pageUri() = "${httpServletRequest.requestURI}${pageParameter(0)}"
+
+    fun pageUri(page: Int = 0, _keyword: String? = null, _size: String? = null, _sort: String? = null) =
+        "${httpServletRequest.requestURI}${pageParameter(page, _keyword, _size, _sort)}"
+
+    fun pageParameter(page: Int = 0) = run {
+        makeParameter(page,
+            httpServletRequest.getParameter("size") ?: "",
+            httpServletRequest.getParameter("sort") ?: "",
+            httpServletRequest.getParameter("keyword") ?: "")
+    }
+
+    fun pageParameter(page: Int = 0, _keyword: String? = null, _size: String? = null, _sort: String? = null) = run {
+        makeParameter(page,
+            _size ?: httpServletRequest.getParameter("size") ?: "",
+            _sort ?: httpServletRequest.getParameter("sort") ?: "",
+            _keyword ?: httpServletRequest.getParameter("keyword") ?: ""
+        )
+    }
+
+    private fun makeParameter(
+        page: Int,
+        size: String,
+        sort: String,
+        keyword: String,
+    ): String {
+        val pageParameter = StringBuilder("?page=${page}")
+        if (size.isNotEmpty()) {
+            pageParameter.append("&").append("size=$size")
+        }
+        if (sort.isNotEmpty()) {
+            pageParameter.append("&").append("sort=$sort")
+        }
+        if (keyword.isNotEmpty()) {
+            pageParameter.append("&").append("keyword=$keyword")
+        }
+        return UriUtils.encodeQuery(pageParameter.toString(), "UTF-8")
     }
 }

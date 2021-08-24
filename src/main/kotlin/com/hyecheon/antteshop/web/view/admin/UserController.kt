@@ -35,9 +35,10 @@ class UserController(
     @GetMapping("")
     fun users(
         @PageableDefault(page = 0, size = 5, direction = Sort.Direction.DESC, sort = ["id"]) pageable: Pageable,
+        @RequestParam("keyword") keyword: String? = null,
         model: Model,
     ): String {
-        val pageUser = userService.users(pageable)
+        val pageUser = userService.users(pageable, keyword)
         model.addAttribute("pageInfo", PageInfo.create(pageUser))
         val users = pageUser.content
         model.addAttribute("users", users)

@@ -3,16 +3,10 @@
 <th:block th:fragment="sortBtn(field,text)">
     <a th:if="${!@thymeleafUtils.sortField(field)}"
        class="text-white"
-       th:href="@{${#httpServletRequest.requestURI}(
-                       size=${#httpServletRequest.getParameter('size')},
-                       sort=${field+',desc'}
-                       )}">[[${text}]]</a>
+       th:href="@{${@thymeleafUtils.pageUri(0,null,null,field+',desc')}}">[[${text}]]</a>
     <a th:if="${@thymeleafUtils.sortField(field)}"
        class="text-white"
-       th:href="@{${#httpServletRequest.requestURI}(
-                       size=${#httpServletRequest.getParameter('size')},
-                       sort=${@thymeleafUtils.reverseSort()}
-                       )}">[[${text}]]</a>
+       th:href="@{${@thymeleafUtils.pageUri(0,null,null,@thymeleafUtils.reverseSort())}}">[[${text}]]</a>
     <span th:if="${@thymeleafUtils.sortField(field)}"
           th:class="${@thymeleafUtils.isAsc() ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 </th:block>

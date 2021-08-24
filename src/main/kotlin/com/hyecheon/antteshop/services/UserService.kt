@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable
  */
 interface UserService {
     fun users(pageable: Pageable): Page<UserDto>
+    fun users(pageable: Pageable, keyword: String? = null): Page<UserDto>
     fun save(userDto: UserDto): UserDto
     fun save(id: Long, userDto: UserDto): UserDto
     fun existsByEmail(email: String): Boolean

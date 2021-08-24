@@ -19,20 +19,11 @@ data class PageInfo(
 
     companion object {
         fun create(page: Page<*>?, showPage: Int = 2): PageInfo? {
-            if (page == null) return null
-            val pageList = when {
-                page.isFirst -> 0..(showPage * 2)
-                page.isLast -> ((page.totalPages - showPage * 2) - 1)..(page.totalPages - 1)
-                else -> {
-                    val startIndex = page.number - showPage
-                    val endIndex = page.number + showPage
-                    when {
-                        startIndex <= 0 -> 0..showPage * 2
-                        endIndex >= page.totalPages -> ((page.totalPages - showPage * 2) - 1)..(page.totalPages - 1)
-                        else -> startIndex..endIndex
-                    }
-                }
-            }.toList()
+            if (page == null || page.isEmpty) return null
+            val currentPage = page.number
+            val startPage = (currentPage - showPage).coerceAtLeast(0)
+            val endPage = (currentPage + showPage).coerceAtMost(page.totalPages - 1)
+            val pageList = (startPage..endPage).toList()
             val prePageNum = (pageList.first() - showPage - 1).coerceAtLeast(0)
             val nexPageNum = (pageList.last() + showPage + 1).coerceAtMost(page.totalPages - 1)
             return PageInfo(page.hasNext(),

@@ -1,8 +1,7 @@
 package com.hyecheon.antteshop.repositories
 
-import com.hyecheon.antteshop.TestUsers
 import com.hyecheon.antteshop.entity.User
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,8 +28,8 @@ class UserRepositoryTest {
         userRepository.saveAll(users)
         val pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "id")
         val pageUser = userRepository.findAll(pageable)
-        Assertions.assertThat(pageUser.totalElements).isEqualTo(users.size.toLong())
-        Assertions.assertThat(pageUser.content[0].email).isEqualTo(users.last().email)
+        assertThat(pageUser.totalElements).isEqualTo(users.size.toLong())
+        assertThat(pageUser.content[0].email).isEqualTo(users.last().email)
     }
 
     fun users() = run {
@@ -50,7 +49,30 @@ class UserRepositoryTest {
     internal fun test2() {
         val exists = userRepository.existsById(1L)
 
-        Assertions.assertThat(exists).isFalse
+        assertThat(exists).isFalse
 
+    }
+
+    @DisplayName("3. searchQuery 테스트")
+    @Test
+    internal fun test3() {
+        val test1 = User.builder()
+            .email("test1@test.com")
+            .password("12345678")
+            .firstName("firstName")
+            .lastName("lastName")
+            .build()
+        val test2 = User.builder()
+            .email("test2@test.com")
+            .password("12345678")
+            .firstName("hyecheon")
+            .lastName("lee")
+            .build()
+        userRepository.save(test1)
+        userRepository.save(test2)
+        val pageable = PageRequest.of(0, 4)
+        val pageUser = userRepository.findAll("hye", pageable)
+
+        assertThat(pageUser.content.size).isOne
     }
 }
