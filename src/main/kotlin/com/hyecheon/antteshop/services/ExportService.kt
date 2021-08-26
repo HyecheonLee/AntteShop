@@ -12,5 +12,5 @@ import java.util.*
  * Date: 2021/08/26
  */
 interface ExportService {
-    fun <T> export(exportData: ExportData<T>, writer: Writer)
+    fun <T> export(exportData: ExportData<T>): String
 }

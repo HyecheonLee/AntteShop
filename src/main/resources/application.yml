@@ -28,3 +28,6 @@ decorator:
 logging:
   file:
     path: logs
+temp:
+  file:
+    dir: temp/

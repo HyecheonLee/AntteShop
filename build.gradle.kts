@@ -55,6 +55,8 @@ dependencies {
     // https://mvnrepository.com/artifact/net.sf.supercsv/super-csv
     implementation("net.sf.supercsv:super-csv:2.4.0")
 
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+    implementation("org.apache.poi:poi-ooxml:5.0.0")
 }
 
 tasks.withType<KotlinCompile> {

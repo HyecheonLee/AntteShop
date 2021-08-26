@@ -6,14 +6,14 @@ import com.hyecheon.antteshop.mapper.UserMapper
 import com.hyecheon.antteshop.services.ExportService
 import com.hyecheon.antteshop.services.RoleService
 import com.hyecheon.antteshop.services.UserService
-import com.hyecheon.antteshop.services.impl.CsvExportService
 import com.hyecheon.antteshop.web.dto.UserCreateDto
 import com.hyecheon.antteshop.web.dto.UserDto
 import com.hyecheon.antteshop.web.dto.UserUpdateDto
+import org.apache.commons.io.IOUtils
+import org.springframework.core.io.FileSystemResource
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -23,8 +23,7 @@ import org.springframework.validation.FieldError
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import org.supercsv.io.CsvBeanWriter
-import org.supercsv.prefs.CsvPreference
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletResponse
@@ -39,7 +38,7 @@ import javax.servlet.http.HttpServletResponse
 class UserController(
     private val userService: UserService,
     private val roleService: RoleService,
-    private val exportService: ExportService,
+    private val exportService: Map<String, ExportService>,
 ) {
 
     @GetMapping("")
@@ -153,18 +152,39 @@ class UserController(
         return "redirect:/admin/users"
     }
 
-    @GetMapping("/export/csv")
+    /*@GetMapping("/export/csv")
     fun exportToCSV(response: HttpServletResponse) = run {
         val usersDto = userService.usersAll()
-        val timestamp = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Date())
         val exportData = ExportData(
             listOf("User Id", "Email", "FirstName", "LastName", "Roles", "Enabled"),
             listOf("id", "email", "firstName", "lastName", "roles", "enabled"),
             usersDto,
-            "users_${timestamp}.csv"
+            "users_${SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Date())}.csv"
         )
         response.contentType = "text/csv"
         response.setHeader("Content-Disposition", "attachment; filename=${exportData.fileName}")
-        exportService.export(exportData, response.writer)
+        exportService["csvExportService"]?.export(exportData, response.writer)
+    }*/
+
+    @GetMapping("/export/{type:xlsx|csv}")
+    fun exportToExcel(response: HttpServletResponse, @PathVariable type: String) {
+        val usersDto = userService.usersAll()
+        val exportData = ExportData(
+            listOf("User Id", "Email", "FirstName", "LastName", "Roles", "Enabled"),
+            listOf("id", "email", "firstName", "lastName", "roles", "enabled"),
+            usersDto,
+            "users_${SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Date())}.${type}"
+        )
+        response.outputStream.use { output ->
+            exportService["${type}ExportService"]?.export(exportData)?.let { filePath ->
+                response.contentType = "application/octet-stream"
+                response.setHeader("Content-Disposition", "attachment; filename=${exportData.fileName}")
+                val readFile = File(filePath)
+                FileSystemResource(readFile).inputStream.use { input ->
+                    IOUtils.copy(input, output)
+                }
+                readFile.delete()
+            }
+        }
     }
 }
