@@ -19,6 +19,11 @@ class UserServiceImpl(
     private val userRepository: UserRepository,
 ) : UserService {
     private val mapper = UserMapper.INSTANCE
+
+    override fun usersAll(): List<UserDto> {
+        return userRepository.findAll().map { it.toDto() }
+    }
+
     override fun users(pageable: Pageable) = run {
         val pageUser = userRepository.findAll(pageable)
         pageUser.map(mapper::toDto)

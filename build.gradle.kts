@@ -51,6 +51,10 @@ dependencies {
     implementation("org.webjars:jquery:3.4.1")
 
     testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+
+    // https://mvnrepository.com/artifact/net.sf.supercsv/super-csv
+    implementation("net.sf.supercsv:super-csv:2.4.0")
+
 }
 
 tasks.withType<KotlinCompile> {

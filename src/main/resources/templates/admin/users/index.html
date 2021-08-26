@@ -8,6 +8,8 @@
     <div>
         <h2>사용자 관리</h2>
         <a th:href="@{/admin/users/new}">새 사용자 생성</a>
+        &nbsp;|&nbsp;
+        <a th:href="@{/admin/users/export/csv}">CSV로 내보내기</a>
         <div th:if="${message != null}" class="alert alert-success text-center" th:text="${message}"></div>
     </div>
     <div>

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable
  * Date: 2021/08/14
  */
 interface UserService {
+    fun usersAll(): List<UserDto>
     fun users(pageable: Pageable): Page<UserDto>
     fun users(pageable: Pageable, keyword: String? = null): Page<UserDto>
     fun save(userDto: UserDto): UserDto
