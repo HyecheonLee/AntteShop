@@ -152,28 +152,16 @@ class UserController(
         return "redirect:/admin/users"
     }
 
-    /*@GetMapping("/export/csv")
-    fun exportToCSV(response: HttpServletResponse) = run {
-        val usersDto = userService.usersAll()
-        val exportData = ExportData(
-            listOf("User Id", "Email", "FirstName", "LastName", "Roles", "Enabled"),
-            listOf("id", "email", "firstName", "lastName", "roles", "enabled"),
-            usersDto,
-            "users_${SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Date())}.csv"
-        )
-        response.contentType = "text/csv"
-        response.setHeader("Content-Disposition", "attachment; filename=${exportData.fileName}")
-        exportService["csvExportService"]?.export(exportData, response.writer)
-    }*/
-
-    @GetMapping("/export/{type:xlsx|csv}")
+    @GetMapping("/export/{type:xlsx|csv|pdf}")
     fun exportToExcel(response: HttpServletResponse, @PathVariable type: String) {
         val usersDto = userService.usersAll()
         val exportData = ExportData(
             listOf("User Id", "Email", "FirstName", "LastName", "Roles", "Enabled"),
             listOf("id", "email", "firstName", "lastName", "roles", "enabled"),
             usersDto,
-            "users_${SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Date())}.${type}"
+            "users_${SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Date())}.${type}",
+            if (type == "pdf") "pdf" else null,
+            if (type == "pdf") "list-of-users" else null,
         )
         response.outputStream.use { output ->
             exportService["${type}ExportService"]?.export(exportData)?.let { filePath ->

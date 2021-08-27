@@ -13,4 +13,6 @@ data class ExportData<T>(
     val field: List<String>,
     val data: List<T>,
     val fileName: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")),
+    val type: String? = null,
+    val template: String? = null,
 )

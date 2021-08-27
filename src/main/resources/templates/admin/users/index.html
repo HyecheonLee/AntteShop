@@ -12,6 +12,8 @@
         <a th:href="@{/admin/users/export/csv}">CSV로 내보내기</a>
         &nbsp;|&nbsp;
         <a th:href="@{/admin/users/export/xlsx}">Excel로 내보내기</a>
+        &nbsp;|&nbsp;
+        <a th:href="@{/admin/users/export/pdf}">PDF로 내보내기</a>
         <div th:if="${message != null}" class="alert alert-success text-center" th:text="${message}"></div>
     </div>
     <div>

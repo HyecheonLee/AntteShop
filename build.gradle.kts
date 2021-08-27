@@ -57,6 +57,13 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
     implementation("org.apache.poi:poi-ooxml:5.0.0")
+
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation("org.jsoup:jsoup:1.14.2")
+
+    implementation("org.xhtmlrenderer:flying-saucer-core:9.1.22")
+    implementation("org.xhtmlrenderer:flying-saucer-pdf-itext5:9.1.22")
+
 }
 
 tasks.withType<KotlinCompile> {

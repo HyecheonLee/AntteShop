@@ -43,7 +43,6 @@ class XlsxExportService(
     private fun headerLine(workbook: XSSFWorkbook, header: List<String>) = run {
         val sheet = workbook.createSheet()
         val row = sheet.createRow(0)
-
         /*
         val cellStyle = workbook.createCellStyle()
         val font = workbook.createFont()
@@ -51,7 +50,6 @@ class XlsxExportService(
         font.fontHeight = 16
         cellStyle.setFont(font)
 */
-
         header.forEachIndexed { index, s ->
             createCell(row, index, s)
         }
