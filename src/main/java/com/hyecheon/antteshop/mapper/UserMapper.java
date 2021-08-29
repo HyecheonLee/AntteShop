@@ -1,6 +1,6 @@
 package com.hyecheon.antteshop.mapper;
 
-import com.hyecheon.antteshop.entity.User;
+import com.hyecheon.antteshop.domains.entity.User;
 import com.hyecheon.antteshop.utils.ContextUtils;
 import com.hyecheon.antteshop.web.dto.RoleDto;
 import com.hyecheon.antteshop.web.dto.UserCreateDto;

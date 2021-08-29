@@ -1,6 +1,6 @@
 package com.hyecheon.antteshop.repositories
 
-import com.hyecheon.antteshop.entity.Role
+import com.hyecheon.antteshop.domains.entity.Role
 import org.springframework.data.jpa.repository.JpaRepository
 
 /**

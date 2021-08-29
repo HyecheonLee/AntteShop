@@ -1,13 +1,11 @@
 package com.hyecheon.antteshop.web.dto
 
-import com.hyecheon.antteshop.entity.User
+import com.hyecheon.antteshop.domains.entity.User
 import com.hyecheon.antteshop.mapper.UserMapper
-import com.hyecheon.antteshop.web.dto.RoleDto
 import lombok.AllArgsConstructor
 import lombok.Builder
 import lombok.Data
 import lombok.NoArgsConstructor
-import org.thymeleaf.util.StringUtils
 import java.util.stream.Collectors
 
 /**

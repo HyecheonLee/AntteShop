@@ -1,6 +1,6 @@
 package com.hyecheon.antteshop.repositories
 
-import com.hyecheon.antteshop.entity.User
+import com.hyecheon.antteshop.domains.entity.User
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -34,12 +34,12 @@ class UserRepositoryTest {
 
     fun users() = run {
         (1..100).map { i ->
-            User.builder()
-                .email("test-${i}@test.com")
-                .password("12345678")
-                .firstName("firstName-${i}")
-                .lastName("lastName-${i}")
-                .build()
+            User(
+                email = "test-${i}@test.com",
+                password = "12345678",
+                firstName = "firstName-${i}",
+                lastName = "lastName-${i}",
+            )
         }
     }
 
@@ -56,18 +56,19 @@ class UserRepositoryTest {
     @DisplayName("3. searchQuery 테스트")
     @Test
     internal fun test3() {
-        val test1 = User.builder()
-            .email("test1@test.com")
-            .password("12345678")
-            .firstName("firstName")
-            .lastName("lastName")
-            .build()
-        val test2 = User.builder()
-            .email("test2@test.com")
-            .password("12345678")
-            .firstName("hyecheon")
-            .lastName("lee")
-            .build()
+        val test1 = User(
+            email = "test1@test.com",
+            password = "12345678",
+            firstName = "firstName",
+            lastName = "lastName",
+        )
+        val test2 = User(
+            email = "test2@test.com",
+            password = "12345678",
+            firstName = "hyecheon",
+            lastName = "lee",
+        )
+
         userRepository.save(test1)
         userRepository.save(test2)
         val pageable = PageRequest.of(0, 4)

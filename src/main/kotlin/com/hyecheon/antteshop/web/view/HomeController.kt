@@ -18,4 +18,9 @@ class HomeController {
     fun homePage(model: Model): String {
         return "index"
     }
+
+    @GetMapping("/login")
+    fun loginPage() = run {
+        "login"
+    }
 }

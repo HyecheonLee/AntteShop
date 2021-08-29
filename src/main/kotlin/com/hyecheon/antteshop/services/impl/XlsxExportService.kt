@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.hyecheon.antteshop.domains.ExportData
 import com.hyecheon.antteshop.services.ExportService
-import com.hyecheon.antteshop.web.dto.UserDto
 import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.xssf.usermodel.XSSFRow
 import org.apache.poi.xssf.usermodel.XSSFSheet
@@ -80,12 +79,5 @@ class XlsxExportService(
             }
         }
         style?.apply { cell.setCellStyle(this) }
-    }
-}
-
-inline fun <reified T : Any> T.asMap(): Map<String, Any?> {
-    val props = T::class.memberProperties.associateBy { it.name }
-    return props.keys.associateWith {
-        props[it]?.get(this)
     }
 }

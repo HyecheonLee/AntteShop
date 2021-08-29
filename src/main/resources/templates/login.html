@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout/default-fragment::head(~{::title})">
+    <title>Login - Antte Admin</title>
+</head>
+<body style="background-color: #fbd157">
+<div class="container-fluid text-center">
+    <div>
+        <img width="400px" th:src="@{/images/mainLogo.png}"/>
+    </div>
+    <form th:action="@{/login}" method="post" style="max-width: 350px;margin: 0 auto">
+        <div th:if="${param.error}">
+            <p class="text-danger" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></p>
+        </div>
+        <div class="border border-secondary rounded p-3">
+            <p>Antte 제어판에 액세스</p>
+            <p>
+                <input type="email" name="email" class="form-control" required placeholder="이메일"/>
+            </p>
+            <p>
+                <input type="password" name="password" class="form-control" placeholder="암호" required/>
+            </p>
+            <p>
+                <input type="submit" value="로그인" class="btn btn-primary"/>
+            </p>
+        </div>
+    </form>
+    <section>
+    </section>
+</div>
+<footer th:replace="/layout/default-fragment::footer"></footer>
+</body>
+</html>

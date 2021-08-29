@@ -1,7 +1,6 @@
 package com.hyecheon.antteshop
 
-import com.hyecheon.antteshop.entity.User
-import org.springframework.data.domain.Page
+import com.hyecheon.antteshop.domains.entity.User
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -23,12 +22,12 @@ object TestUsers {
     }
 
     fun user(i: Long) = run {
-        User.builder()
-            .id(i)
-            .email("test-${i}@test.com")
-            .password("12345678")
-            .firstName("firstName-${i}")
-            .lastName("lastName-${i}")
-            .build()
+        User(
+            id = i,
+            email = "test-${i}@test.com",
+            password = "12345678",
+            firstName = "firstName-${i}",
+            lastName = "lastName-${i}"
+        )
     }
 }
