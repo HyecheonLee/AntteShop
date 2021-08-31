@@ -33,6 +33,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
+
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
@@ -63,6 +64,7 @@ dependencies {
 
     implementation("org.xhtmlrenderer:flying-saucer-core:9.1.22")
     implementation("org.xhtmlrenderer:flying-saucer-pdf-itext5:9.1.22")
+
 
 }
 

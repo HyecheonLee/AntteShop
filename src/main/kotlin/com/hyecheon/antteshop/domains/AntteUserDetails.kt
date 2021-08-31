@@ -41,4 +41,8 @@ class AntteUserDetails(
     override fun isEnabled(): Boolean {
         return user.enabled
     }
+
+    fun getFullName(): String {
+        return "${user.firstName} ${user.lastName}"
+    }
 }

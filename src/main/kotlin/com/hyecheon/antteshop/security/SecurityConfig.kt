@@ -49,6 +49,7 @@ class SecurityConfig(
             .loginPage("/login")
             .usernameParameter("email")
             .permitAll()
+            .and().logout().permitAll()
     }
 
     override fun configure(web: WebSecurity) {
