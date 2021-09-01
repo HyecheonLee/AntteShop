@@ -42,14 +42,24 @@ class SecurityConfig(
     }
 
     override fun configure(http: HttpSecurity) {
-        http.csrf().disable()
+        http
             .authorizeRequests()
+            .anyRequest().authenticated()
             .and()
             .formLogin()
             .loginPage("/login")
-            .usernameParameter("email")
+            .successHandler { request, response, authentication ->
+                response.sendRedirect("/admin")
+            }
             .permitAll()
-            .and().logout().permitAll()
+            .usernameParameter("email")
+            .and()
+            .logout()
+            .permitAll()
+            .invalidateHttpSession(true).deleteCookies("JSESSIONID")
+            .and().rememberMe()
+//            .tokenValiditySeconds(60 * 60 * 24 * 30)
+
     }
 
     override fun configure(web: WebSecurity) {

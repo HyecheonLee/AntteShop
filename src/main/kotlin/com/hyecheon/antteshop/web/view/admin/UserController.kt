@@ -1,5 +1,6 @@
 package com.hyecheon.antteshop.web.view.admin
 
+import com.hyecheon.antteshop.domains.AntteUserDetails
 import com.hyecheon.antteshop.domains.ExportData
 import com.hyecheon.antteshop.domains.PageInfo
 import com.hyecheon.antteshop.mapper.UserMapper
@@ -14,6 +15,7 @@ import org.springframework.core.io.FileSystemResource
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -61,14 +63,18 @@ class UserController(
     }
 
     @GetMapping("/{id}/update")
-    fun update(model: Model, @PathVariable id: Long): String {
+    fun update(@AuthenticationPrincipal loggedUser: AntteUserDetails, model: Model, @PathVariable id: Long): String {
+
         val roles = roleService.findAll()
+
         model.addAttribute("roles", roles)
 
         val userDto = userService.findById(id)
+        println(userDto)
         model.addAttribute("user", userDto)
         return "admin/users/update"
     }
+
 
     @PostMapping("/{id}/update")
     fun update(

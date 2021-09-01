@@ -27,6 +27,8 @@ data class UserUpdateDto(
 ) {
     fun saveImage(uploadDir: String) = run {
         image?.let { multipartFile ->
+            if (multipartFile.isEmpty) return@run
+
             multipartFile.originalFilename?.let {
                 val fileName = UUID.randomUUID().toString() + "." + it.substringAfterLast(".")
                 photos = FileInfoDto(

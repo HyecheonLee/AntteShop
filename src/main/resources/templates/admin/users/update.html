@@ -50,10 +50,12 @@
                         <input type="checkbox" class="m-2"
                                th:text="${role.name}"
                                th:value="${role.id}"
-                               th:field="*{roles}"
+                               th:id="'roles'+${roleStat.count}"
+                               name="roles"
                                th:checked="${user.isRole(role.id)}"
                         />
-                        - <small th:for="${#ids.prev('roles')}" th:text="${role.description}"
+                        <input type="hidden" name="_roles" value="on"/>
+                        - <small th:for="'roles'+${roleStat.count}" th:text="${role.description}"
                                  class="form-check-label"></small>
                         <br/>
                     </th:block>
