@@ -44,11 +44,12 @@ class SecurityConfig(
     override fun configure(http: HttpSecurity) {
         http
             .authorizeRequests()
+            .antMatchers("/admin/users/**").hasAnyAuthority("Admin")
             .anyRequest().authenticated()
             .and()
             .formLogin()
             .loginPage("/login")
-            .successHandler { request, response, authentication ->
+            .successHandler { _, response, _ ->
                 response.sendRedirect("/admin")
             }
             .permitAll()
