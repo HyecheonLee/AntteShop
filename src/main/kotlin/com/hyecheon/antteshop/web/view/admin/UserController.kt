@@ -12,9 +12,12 @@ import com.hyecheon.antteshop.web.dto.UserDto
 import com.hyecheon.antteshop.web.dto.UserUpdateDto
 import org.apache.commons.io.IOUtils
 import org.springframework.core.io.FileSystemResource
+import org.springframework.core.io.UrlResource
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
+import org.springframework.http.HttpHeaders
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Controller
@@ -25,7 +28,9 @@ import org.springframework.validation.FieldError
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import org.springframework.web.util.UriUtils
 import java.io.File
+import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletResponse
@@ -158,8 +163,9 @@ class UserController(
         return "redirect:/admin/users"
     }
 
+    @ResponseBody
     @GetMapping("/export/{type:xlsx|csv|pdf}")
-    fun exportToExcel(response: HttpServletResponse, @PathVariable type: String) {
+    fun exportToExcel(response: HttpServletResponse, @PathVariable type: String) = run {
         val usersDto = userService.usersAll()
         val exportData = ExportData(
             listOf("User Id", "Email", "FirstName", "LastName", "Roles", "Enabled"),
@@ -169,16 +175,13 @@ class UserController(
             if (type == "pdf") "pdf" else null,
             if (type == "pdf") "list-of-users" else null,
         )
-        response.outputStream.use { output ->
-            exportService["${type}ExportService"]?.export(exportData)?.let { filePath ->
-                response.contentType = "application/octet-stream"
-                response.setHeader("Content-Disposition", "attachment; filename=${exportData.fileName}")
-                val readFile = File(filePath)
-                FileSystemResource(readFile).inputStream.use { input ->
-                    IOUtils.copy(input, output)
-                }
-                readFile.delete()
-            }
+        val encodeUploadFileName = UriUtils.encode(exportData.fileName, StandardCharsets.UTF_8)
+        val contentDisposition = """attachment; filename="$encodeUploadFileName" """
+        val resource = exportService["${type}ExportService"]?.export(exportData)?.let { filePath ->
+            UrlResource("file:${filePath}")
         }
+        ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+            .body(resource)
     }
 }
