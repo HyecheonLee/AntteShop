@@ -29,13 +29,6 @@ class ModelAop {
     @Around("@annotation(com.hyecheon.antteshop.annotation.BasicModel)")
     fun defaultModel(joinPoint: ProceedingJoinPoint): Any = run {
         joinPoint.args.forEach { println(it) }
-        
-        /*val roles = roleService.findAll()
-        if (model != null) {
-            model.addAttribute("roles", roles)
-            model.addAttribute("title", "test")
-        }*/
         log.info("defaultModel")
-//        joinPoint.proceed()
     }
 }

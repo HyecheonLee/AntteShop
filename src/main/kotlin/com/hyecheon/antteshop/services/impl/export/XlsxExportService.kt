@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.hyecheon.antteshop.domains.ExportData
 import com.hyecheon.antteshop.services.ExportService
+import lombok.extern.log4j.Log4j2
 import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.xssf.usermodel.XSSFRow
 import org.apache.poi.xssf.usermodel.XSSFSheet
@@ -41,13 +42,6 @@ class XlsxExportService(
     private fun headerLine(workbook: XSSFWorkbook, header: List<String>) = run {
         val sheet = workbook.createSheet()
         val row = sheet.createRow(0)
-        /*
-        val cellStyle = workbook.createCellStyle()
-        val font = workbook.createFont()
-        font.bold = true
-        font.fontHeight = 16
-        cellStyle.setFont(font)
-*/
         header.forEachIndexed { index, s ->
             createCell(row, index, s)
         }

@@ -54,15 +54,4 @@ class PdfExportService(
         context.setVariable("users", exportData.data)
         templateEngine.process("pdf/${exportData.template}", context)
     }
-
-    /*private fun convertToXhtml(html: String): String? {
-        val tidy = Tidy()
-        tidy.setInputEncoding(UTF_8)
-        tidy.setOutputEncoding(UTF_8)
-        tidy.setXHTML(true)
-        val inputStream = ByteArrayInputStream(html.getBytes(UTF_8))
-        val outputStream = ByteArrayOutputStream()
-        tidy.parseDOM(inputStream, outputStream)
-        return outputStream.toString(UTF_8)
-    }*/
 }
