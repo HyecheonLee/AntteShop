@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/layout::layout(~{::title},~{::section})}" lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home - Antte Admin</title>
+</head>
+<body>
+<section>
+    <div>
+        <h2>카테고리 관리</h2>
+        <a th:href="@{/admin/categories/new}" class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
+        <a th:href="@{/admin/categories/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
+    </div>
+    <div th:if="${message != null}" class="alert alert-success text-center" th:text="${message}"></div>
+    <div>
+        <form th:action="|@{/admin/users}${@thymeleafUtils.pageParameter(0,null,null,null)}|" class="form-inline m-3">
+            필터:&nbsp; <input type="search" name="keyword" th:value="${#request.getParameter('keyword')}"
+                             class="form-control" required/>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+            </button>
+            <button type="button" onclick="clearFilter()" class="btn btn-secondary">
+                <i class="fas fa-eraser"></i>
+            </button>
+        </form>
+    </div>
+    <div class="full-details">
+        <table class="table table-bordered table-striped table-hover table-responsive-xl">
+            <thead class="thead-dark">
+            <tr>
+                <th class="hideable-column">
+                    <div th:replace="/layout/fragment/sortBtn::sortBtn('id','카테고리 ID')"></div>
+                </th>
+                <th>사진</th>
+                <th class="hideable-column">
+                    <div th:replace="/layout/fragment/sortBtn::sortBtn('email','카테고리 이름')"></div>
+                </th>
+                <th>
+                    <div th:replace="/layout/fragment/sortBtn::sortBtn('lastName','카테고리 Alias')"></div>
+                </th>
+                <th>
+                    <div th:replace="/layout/fragment/sortBtn::sortBtn('enabled','활성화됨')"></div>
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="category : ${categories}" th:object="${category}">
+                <td class="hideable-column" th:text="*{id}"></td>
+                <td>
+
+                </td>
+                <td class="hideable-column" th:text="*{name}"></td>
+                <td th:text="*{alias}"></td>
+                <td>
+                    <a th:classappend="${category.enabled ? 'icon-green fa-check-circle' : 'icon-gray fa-circle'}"
+                       th:title="${category.enabled}? '사용자 비활성화' : '사용자 활성화'"
+                       class="fas fa-2x "
+                       th:href="@{/admin/categories/{id}/enabled(id=*{id},status=*{!enabled})}"></a>
+                </td>
+                <td>
+                    <a class="fas fa-edit fa-2x icon-green" th:href="@{/admin/categories/{id}/update(id=*{id})}"></a>
+                    &nbsp;
+                    <a class="fas fa-trash fa-2x icon-dark link-delete"
+                       th:href="@{/admin/categories/{id}/delete(id=*{id})}"
+                       th:userId="*{id}" title="이 사용자 삭제"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <div class="text-center m-1">
+                <span th:if="${pageInfo == null}">사용자를 찾을 수 없음</span>
+            </div>
+            <nav th:replace="/layout/fragment/navigation::navigation(${pageInfo})" aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="less-details">
+        <div th:each="user : ${users}" th:object="${user}" class="row m-1">
+            <div class="col-4">
+                <i th:if="*{photos == null}" class="fas fa-portrait fa-3x icon-silver"></i>
+                <img th:unless="*{photos == null}" th:src="@{'/'+*{photos.path}}" style="width: 100px"/>
+            </div>
+            <div class="col-8">
+                <div th:text="${user.firstName}+' '+${user.lastName}"></div>
+                <div th:text="${user.displayRole()}"></div>
+                <div class="mt-2">
+                    <a th:classappend="${user.enabled ? 'icon-green fa-check-circle' : 'icon-gray fa-circle'}"
+                       th:title="${user.enabled}? '사용자 비활성화' : '사용자 활성화'"
+                       class="fas fa-2x "
+                       th:href="@{/admin/users/{id}/enabled(id=*{id},status=*{!enabled})}"></a>
+                    &nbsp;
+                    <a class="fas fa-edit fa-2x icon-green" th:href="@{/admin/users/{id}/update(id=*{id})}"></a>
+                    &nbsp;
+                    <a class="fas fa-trash fa-2x icon-dark link-delete"
+                       th:href="@{/admin/users/{id}/delete(id=*{id})}"
+                       th:userId="*{id}" title="이 사용자 삭제"></a>
+                </div>
+            </div>
+            <div>&nbsp;</div>
+        </div>
+        <div>
+            <div class="text-center m-1">
+                <span th:if="${pageInfo == null}">사용자를 찾을 수 없음</span>
+            </div>
+            <nav th:replace="/layout/fragment/navigation::navigation(${pageInfo})" aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $(".link-delete").on("click", function (e) {
+                e.preventDefault();
+                let link = $(this);
+                const userId = link.attr("userId");
+                confirmModal("경고", `이 사용자 ID ${userId}을 삭제하시겠습니까?`, e => {
+                    window.location.href = link.attr("href");
+                });
+            });
+        })
+
+        function clearFilter() {
+            window.location = /*[[${@thymeleafUtils.pageUri(0,'',null,null)}]]*/"";
+        }
+    </script>
+</section>
+</body>
+</html>
