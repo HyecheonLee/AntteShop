@@ -13,10 +13,14 @@ import java.nio.file.Paths
 @Configuration
 class MvcConfig : WebMvcConfigurer {
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        val dirName = "user-photos"
-        val userPhotosDir = Paths.get(dirName)
-        val userPhotosPath = userPhotosDir.toFile().absoluteFile
+        addResourceHandler(registry, "user-photos")
+        addResourceHandler(registry, "category-images")
+    }
+
+    fun addResourceHandler(registry: ResourceHandlerRegistry, dirName: String) = run {
+        val dir = Paths.get(dirName)
+        val absolutePath = dir.toFile().absoluteFile
         registry.addResourceHandler("/${dirName}/**")
-            .addResourceLocations("file:///$userPhotosPath/")
+            .addResourceLocations("file:///$absolutePath/")
     }
 }
