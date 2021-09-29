@@ -18,13 +18,15 @@ data class Category(
     val id: Long? = null,
 
     @Column(length = 128, nullable = false, unique = true)
-    var name: String,
+    var name: String = "",
 
     @Column(length = 64, nullable = false, unique = true)
     var alias: String = name,
 
     @Column(length = 128, nullable = false)
     var image: String = "",
+
+    var level: Int = 0,
 
     var enabled: Boolean = false,
 
@@ -39,6 +41,10 @@ data class Category(
     ) : BaseWithUserEntity() {
     fun addChild(childCategory: Category) {
         child.add(childCategory)
+    }
+
+    fun dispCategoryName() = run {
+        """${"--".repeat(level)} $name"""
     }
 
     override fun equals(other: Any?): Boolean {

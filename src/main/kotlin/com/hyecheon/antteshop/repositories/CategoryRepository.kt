@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository
  * Date: 2021/09/27
  */
 interface CategoryRepository : JpaRepository<Category, Long> {
-
+    fun findAllByLevel(level: Int): List<Category>
 }
