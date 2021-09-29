@@ -7,7 +7,7 @@
 <section>
     <div>
         <h2>카테고리 관리</h2>
-        <a th:href="@{/admin/categories/new}" class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
+        <a th:href="@{/admin/categories/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
         <a th:href="@{/admin/categories/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
     </div>
     <div th:if="${message != null}" class="alert alert-success text-center" th:text="${message}"></div>
@@ -47,7 +47,7 @@
             <tr th:each="category : ${categories}" th:object="${category}">
                 <td class="hideable-column" th:text="*{id}"></td>
                 <td>
-
+                    <img th:src="@{/category-images/{id}/{image}(id=*{id},image=*{image})}" style="width: 100px"/>
                 </td>
                 <td class="hideable-column" th:text="*{name}"></td>
                 <td th:text="*{alias}"></td>
