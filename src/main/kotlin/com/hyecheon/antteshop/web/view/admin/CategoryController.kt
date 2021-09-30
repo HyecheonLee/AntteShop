@@ -30,8 +30,8 @@ class CategoryController(
         model: Model,
         @PageableDefault(page = 0, size = 5, direction = Sort.Direction.DESC, sort = ["id"]) pageable: Pageable,
     ): String {
-        val pageCategory = categoryService.findAll(pageable)
-        model.addAttribute("categories", pageCategory.content)
+        val pageCategory = categoryService.findAllCategorySorted(pageable)
+        model.addAttribute("categories", pageCategory)
         return "admin/categories/index"
     }
 

@@ -32,10 +32,10 @@
                 </th>
                 <th>사진</th>
                 <th class="hideable-column">
-                    <div th:replace="/layout/fragment/sortBtn::sortBtn('email','카테고리 이름')"></div>
+                    <div th:replace="/layout/fragment/sortBtn::sortBtn('name','카테고리 이름')"></div>
                 </th>
                 <th>
-                    <div th:replace="/layout/fragment/sortBtn::sortBtn('lastName','카테고리 Alias')"></div>
+                    <div th:replace="/layout/fragment/sortBtn::sortBtn('alias','카테고리 Alias')"></div>
                 </th>
                 <th>
                     <div th:replace="/layout/fragment/sortBtn::sortBtn('enabled','활성화됨')"></div>
@@ -49,7 +49,7 @@
                 <td>
                     <img th:src="@{/category-images/{id}/{image}(id=*{id},image=*{image})}" style="width: 100px"/>
                 </td>
-                <td class="hideable-column" th:text="*{name}"></td>
+                <td class="hideable-column" th:text="*{dispCategoryName()}"></td>
                 <td th:text="*{alias}"></td>
                 <td>
                     <a th:classappend="${category.enabled ? 'icon-green fa-check-circle' : 'icon-gray fa-circle'}"
@@ -67,55 +67,6 @@
             </tr>
             </tbody>
         </table>
-        <div>
-            <div class="text-center m-1">
-                <span th:if="${pageInfo == null}">사용자를 찾을 수 없음</span>
-            </div>
-            <nav th:replace="/layout/fragment/navigation::navigation(${pageInfo})" aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-    <div class="less-details">
-        <div th:each="user : ${users}" th:object="${user}" class="row m-1">
-            <div class="col-4">
-                <i th:if="*{photos == null}" class="fas fa-portrait fa-3x icon-silver"></i>
-                <img th:unless="*{photos == null}" th:src="@{'/'+*{photos.path}}" style="width: 100px"/>
-            </div>
-            <div class="col-8">
-                <div th:text="${user.firstName}+' '+${user.lastName}"></div>
-                <div th:text="${user.displayRole()}"></div>
-                <div class="mt-2">
-                    <a th:classappend="${user.enabled ? 'icon-green fa-check-circle' : 'icon-gray fa-circle'}"
-                       th:title="${user.enabled}? '사용자 비활성화' : '사용자 활성화'"
-                       class="fas fa-2x "
-                       th:href="@{/admin/users/{id}/enabled(id=*{id},status=*{!enabled})}"></a>
-                    &nbsp;
-                    <a class="fas fa-edit fa-2x icon-green" th:href="@{/admin/users/{id}/update(id=*{id})}"></a>
-                    &nbsp;
-                    <a class="fas fa-trash fa-2x icon-dark link-delete"
-                       th:href="@{/admin/users/{id}/delete(id=*{id})}"
-                       th:userId="*{id}" title="이 사용자 삭제"></a>
-                </div>
-            </div>
-            <div>&nbsp;</div>
-        </div>
         <div>
             <div class="text-center m-1">
                 <span th:if="${pageInfo == null}">사용자를 찾을 수 없음</span>

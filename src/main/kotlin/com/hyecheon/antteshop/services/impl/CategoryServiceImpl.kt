@@ -15,7 +15,15 @@ class CategoryServiceImpl(
     private val categoryRepository: CategoryRepository,
 ) : CategoryService {
     override fun findAll(pageable: Pageable): Page<Category> {
-        return categoryRepository.findAll(pageable)
+        val findAll = categoryRepository.findAll(pageable)
+        return findAll
+    }
+
+    override fun findAllCategorySorted(pageable: Pageable): List<Category> = run {
+        val result = mutableListOf<Category>()
+        val categories = categoryRepository.findAllByLevel(0, pageable)
+        categories.forEach { subSearch(it, result) }
+        result
     }
 
     override fun findAllCategorySorted(): List<Category> = run {

@@ -12,5 +12,6 @@ import org.springframework.data.domain.Pageable
 interface CategoryService {
     fun findAll(pageable: Pageable): Page<Category>
     fun findAllCategorySorted(): List<Category>
+    fun findAllCategorySorted(pageable: Pageable): List<Category>
     fun save(category: Category): Category
 }
